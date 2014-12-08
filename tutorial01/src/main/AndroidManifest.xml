@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jayway.gles20"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.jayway.gles20" >
 
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
-
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true" />
-    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
