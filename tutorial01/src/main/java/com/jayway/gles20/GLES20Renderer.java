@@ -15,19 +15,41 @@
  */
 package com.jayway.gles20;
 
-import android.opengl.GLES20;
+import static android.opengl.GLES20.*;
 
 public class GLES20Renderer extends GLRenderer {
+    int width, height;
+    int frame;
 
     @Override
     public void onCreate(int width, int height,
             boolean contextLost) {
-        GLES20.glClearColor(0f, 0f, 0f, 1f);
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public void onDrawFrame(boolean firstDraw) {
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT
-                | GLES20.GL_DEPTH_BUFFER_BIT);
+        ++frame;
+
+        glDisable(GL_SCISSOR_TEST);
+        glClearColor(0f, 0f, 0f, 1f);
+        glClearDepthf(0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        int dim = Math.min(width, height);
+        double t = 3 * frame * Math.PI / 180;
+        float xc = (float)Math.cos(t) * dim / 4;
+        float yc = (float)Math.sin(t) * dim / 4;
+
+        xc += width / 2;
+        yc += height / 2;
+
+        glEnable(GL_SCISSOR_TEST);
+        glScissor((int)xc - dim / 5, (int)yc - dim / 5, 2 * dim / 5, 2 * dim / 5);
+
+        glClearColor((float)Math.cos(t + Math.PI), (float)Math.cos(t + 5 * Math.PI / 4), (float)Math.sin(t + 2 * Math.PI / 7), 1f);
+        glClearDepthf(100f / (frame % 100));
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 }
